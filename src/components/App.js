@@ -7,6 +7,10 @@ import SearchBar from './SearchBar'
 
 class App extends React.Component {
     state = { videos: [], selectedVideo: null };
+
+    componentDidMount() {
+        this.onTermSubmit('7 wonders of the world');
+    }
     onTermSubmit = async term => {
         const response = await youtube.get('/search', {
                         params: {
@@ -17,7 +21,9 @@ class App extends React.Component {
                         }
         });
         
-        this.setState({ videos: response.data.items })
+        this.setState({ videos: response.data.items,
+                        selectedVideo: response.data.items[0]
+                    })
     };
 
     onVideoSelect = (video) => {
